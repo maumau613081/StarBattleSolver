@@ -2,10 +2,10 @@ const rows = 10;
 const cols = 10;
 const board = [];
 
-for (let i = 1; i <= rows; i++) {
+for (let i = 0; i <= rows; i++) {
     const row = [];
-    for (let j = 1; j <= cols; j++) {
-        row.push(`x:${j}, y:${i}`);
+    for (let j = 0; j <= cols; j++) {
+        row.push(`x:${j + 1}, y:${i + 1}`);
     }
     board.push(row);
 }

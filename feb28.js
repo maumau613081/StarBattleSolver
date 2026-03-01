@@ -1,13 +1,53 @@
-const rows = 10;
-const cols = 10;
-const board = [];
-
-for (let i = 0; i < rows; i++) {
-    const row = [];
-    for (let j = 0; j < cols; j++) {
-        row.push(`1`);
+class StarBattlePuzzleImport {
+    constructor(rows, cols) {
+        this.rows = rows;
+        this.cols = cols;
+        this.board = Array.from({length: this.rows}, () => Array(this.cols).fill("1"));
+        this.regions = {};
     }
-    board.push(row);
+
+    addRegions(ranges) {
+        for (const key in ranges) {
+            const data = ranges[key];
+            const xStart = data[0];
+            const label = key.replace("Range", "");
+            this.regions[label] = [];
+
+            for (let i = 1; i < data.length; i++) {
+                const currentX = xStart + i - 1;
+                const yRange = data[i];
+
+                for (let j = 0; j < yRange.length / 2; j++) {
+                    const yStart = yRange[2 * j];
+                    const yEnd = yRange[2 * j + 1];
+
+                    for (let k = yStart; k <= yEnd; k++) {
+                        this.regions[label].push({x:currentX,y:k});
+                    }
+                }
+            }
+        }
+    }
+}
+
+class StarBattlePuzzleSolver {
+    constructor (rows, cols, board, regions) {
+        this.rows = rows;
+        this.cols = cols;
+        this.board = board;
+        this.regions = regions;
+    }
+
+    getsmallestregion () {
+        const numberOfEmpties = [];
+        this.regions.foreach((item, index) => {
+            
+        })
+    }
+
+    randomPlaceInSmallest () {
+        
+    }
 }
 
 const ranges = {
@@ -23,44 +63,5 @@ const ranges = {
     JRange:[6,[7,7],[7,10]]
 };
 
-const regions = {
-    A:[],
-    B:[],
-    C:[],
-    D:[],
-    E:[],
-    F:[],
-    G:[],
-    H:[],
-    I:[],
-    J:[],
-}
-
-/**foreach (Ranges, i) {
-    for (j=0; j<Ranges[i].length-1; j++) {
-        for (k=Ranges[j][1]; k<Ranges[j][2]; k++) {
-            regions.A.push({x:j,y:k});
-        }
-    }
-}
-**/
-
-for (const key in ranges) {
-    const data = ranges[key];
-    const xStart = data[0];
-    const label = key.replace("Range", "");
-
-    for (let i = 1; i < data.length; i++) {
-        const currentX = xStart + i - 1;
-        const yRange = data[i];
-
-        for (let j = 0; j < (yRange.length)/2; j++) {
-            const yStart = yRange[2*j];
-            const yEnd = yRange[2*j+1];
-
-            for (let k = yStart; k <= yEnd; k++) {
-                regions[label].push({x:currentX,y:k})
-            }
-        }
-    }
-}
+const puzzle = new StarBattlePuzzleImport(10,10);
+puzzle.addRegions(ranges);

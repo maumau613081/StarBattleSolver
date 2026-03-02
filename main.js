@@ -8,9 +8,11 @@ const puzzle = new StarBattlePuzzleImport(gridSize, gridSize);
 puzzle.addRegions(ranges);
 const solver = new StarBattlePuzzleSolver(gridSize, gridSize, puzzle.board, puzzle.regions);
 
-function draw(board) {
+function drawOutline(board) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
+
+function draw
 
 document.getElementById('solveBtn').addEventListener('click', () => {
     if (solver.tryPlacingStar(puzzle.board, 0)) {
@@ -21,4 +23,5 @@ document.getElementById('solveBtn').addEventListener('click', () => {
     }
 });
 
-draw(puzzle.board);
+
+drawOutline(puzzle.board);

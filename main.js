@@ -12,7 +12,17 @@ function drawOutline(board) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-function draw
+function drawSqears(board) {
+    for (let i = 0; i < gridSize; i++) {
+        for (let j = 0; j < gridSize; j++) {
+            ctx.beginPath();
+            ctx.moveto(100, 100);
+            ctx.lineto(150, 150);
+            ctx.closePath();
+            ctx.stroke();S
+        }
+    }
+}
 
 document.getElementById('solveBtn').addEventListener('click', () => {
     if (solver.tryPlacingStar(puzzle.board, 0)) {
@@ -25,3 +35,5 @@ document.getElementById('solveBtn').addEventListener('click', () => {
 
 
 drawOutline(puzzle.board);
+drawSqears(board);
+

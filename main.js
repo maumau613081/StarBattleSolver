@@ -13,14 +13,13 @@ function drawOutline(board) {
 }
 
 function drawSqears(board) {
+    ctx.moveto(0, 0);
     for (let i = 0; i < gridSize; i++) {
-        for (let j = 0; j < gridSize; j++) {
-            ctx.beginPath();
-            ctx.moveto(100, 100);
-            ctx.lineto(150, 150);
-            ctx.closePath();
-            ctx.stroke();S
-        }
+        ctx.lineto(5 * i, 100);
+    }
+    cttx.moveto(0, 0);
+    for (let i = 0; i < gridSize; i++) {
+        ctx.lineto(100, 5 * i); 
     }
 }
 
@@ -36,4 +35,5 @@ document.getElementById('solveBtn').addEventListener('click', () => {
 
 drawOutline(puzzle.board);
 drawSqears(board);
+
 

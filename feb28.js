@@ -2,15 +2,15 @@ class StarBattlePuzzleImport {
     constructor(rows, cols) {
         this.rows = rows;
         this.cols = cols;
-        this.board = Array.from({length: this.rows}, () => Array(this.cols).fill("1"));
+        this.board = Array.from({length: this.rows}, () => Array(this.cols).fill(null));
         this.regions = {};
-        console.log("this is Board : ", this.board)
     }
 
+    //枠を読み込む
     addRegions(ranges) {
         for (const key in ranges) {
             const data = ranges[key];
-            const xStart = data[0];
+            const xStart = data[0] - 1;
             const label = key.replace("Range", "");
             this.regions[label] = [];
 
@@ -19,8 +19,8 @@ class StarBattlePuzzleImport {
                 const yRange = data[i];
 
                 for (let j = 0; j < yRange.length / 2; j++) {
-                    const yStart = yRange[2 * j];
-                    const yEnd = yRange[2 * j + 1];
+                    const yStart = yRange[2 * j] - 1;
+                    const yEnd = yRange[2 * j + 1] - 1;
 
                     for (let k = yStart; k <= yEnd; k++) {
                         this.regions[label].push({x:currentX,y:k});
@@ -28,7 +28,6 @@ class StarBattlePuzzleImport {
                 }
             }
         }
-        console.log("this is Regions : ", this.regions)
     }
 }
 
@@ -38,14 +37,16 @@ class StarBattlePuzzleSolver {
         this.cols = cols;
         this.board = board;
         this.regions = regions;
+        this.answerBoard = [];
     }
 
-    getsmallestregion () {
+    //空きが最小の枠を取得
+    getSmallestRegion (board) {
         let minCount = Infinity;
         let smallestRegion = null;
         for (const label in this.regions) {
             const emptyCount = this.regions[label].filter(pos => {
-                return this.board[pos.y-1][pos.y-1] === "1";
+                return board[pos.y][pos.x] === null;
             }).length;
 
             if (emptyCount > 0 && emptyCount < minCount) {
@@ -53,29 +54,54 @@ class StarBattlePuzzleSolver {
                 smallestRegion = label;
             };
         }
-        return smallestRegion;
+        return regions[smallestRegion];
     }
 
+    //星を置いて×をつける
     placeStar(board, x, y) {
-        for (let i = -1; i < 1; i++) {
-            for (let j = -1; j < 1; j++) {
-                if (this.board[targetPosition.x + i][targetPosition.y + j] === 1) {
-                    this.board[targetPosition.x + 1][targetPosition.y + j] = 0
-                } else {
-                    return false;
-                }
+        for (let i = -1; i <= 1; i++) {
+            for (let j = -1; j <= 1; j++) {
+                if (i === 0 && j === 0) continue;
+                if (y + i < 0 || y + i > this.rows - 1) continue;
+                if (x + j < 0 || x + j > this.cols - 1) continue;
+                board[y + i][x + j] = false
             }
         }
-        this.board[randomTarget.x][ranodmTarget.y] = 2;
+        board[y][x] = true;
+        let starsInRow = 0;
+        for (let i = 0; i < 10; i++) {
+            if (board[y][i] === true) starsInRow++;
+        }
+        if (starsInRow === 2) {
+            for (let i = 0; i < 10; i++) {
+                if (board[y][i] === null) board[y][i] = false;
+            }
+        }
+        let starsInCol = 0;
+        for (let i = 0; i < 10; i++) {
+            if (board[i][x] === true) starsInCol++;
+        }
+        if (starsInCol === 2) {
+            for (let i = 0; i < 10; i++) {
+                if (board[i][x] === null) board[i][x] = false;
+            }
+        }
+        return board;
     }
 
-    placeRandomInSmallestRegion (currentStars) {
-        const targetRegion = this.getsmallestregion();
-        if (!targetRegion) return null;
-        const positions = this.regions[targetRegion].filter(pos => {
-            return this.board[pos.x-1][pos.y-1] === "1";
-        });
-
+    tryPlacingStar(board, countOfStars) {
+        if (countOfStars === 20) {
+            this.answerBoard = board;
+            return true;
+        }
+        const smallestRegion = this.getSmallestRegion(board);
+        const candidates = smallestRegion.filter(pos => board[pos.y][pos.x] === null);
+        for (const pos of candidates) {
+            const backup = board.map(row => [...row]);
+            const newBoard = this.placeStar(backup, pos.x, pos.y)
+            if (this.tryPlacingStar(newBoard, countOfStars + 1)) return true;
+        }
+        return false;
     }
 
 }
@@ -95,3 +121,9 @@ const ranges = {
 
 const puzzle = new StarBattlePuzzleImport(10,10);
 puzzle.addRegions(ranges);
+const solver = new StarBattlePuzzleSolver(10, 10, puzzle.board, puzzle.regions);
+if (solver.tryPlacingStar(puzzle.board, 0)) {
+    console.log("解答 : ", solver.answerBoard)
+} else {
+    console.log("解なし")
+};

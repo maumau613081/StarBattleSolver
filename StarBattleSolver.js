@@ -107,7 +107,7 @@ class StarBattlePuzzleSolver {
 
 }
 
-const ranges = {
+/**const ranges = {
     ARange:[1,[1,2],[1,4],[1,3],[2,3],[3,5],[3,5],[2,5],[3,3]],
     BRange:[4,[1,2],[1,2],[1,1],[1,2]],
     CRange:[9,[1,3]],
@@ -118,13 +118,4 @@ const ranges = {
     HRange:[1,[6,10],[7,10],[7,10],[6,7]],
     IRange:[4,[8,10],[6,10],[6,6,8,10],[6,6,8,10],[6,6],[6,6]],
     JRange:[6,[7,7],[7,10]]
-};
-
-const puzzle = new StarBattlePuzzleImport(10,10);
-puzzle.addRegions(ranges);
-const solver = new StarBattlePuzzleSolver(10, 10, puzzle.board, puzzle.regions);
-if (solver.tryPlacingStar(puzzle.board, 0)) {
-    console.log("解答 : ", solver.answerBoard)
-} else {
-    console.log("解なし")
 };

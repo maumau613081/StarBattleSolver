@@ -41,12 +41,12 @@ class StarBattlePuzzleSolver {
     }
 
     //空きが最小の枠を取得
-    getSmallestRegion (board) {
+    getSmallestRegion (givenBoard) {
         let minCount = Infinity;
         let smallestRegion = null;
         for (const label in this.regions) {
             const emptyCount = this.regions[label].filter(pos => {
-                return board[pos.y][pos.x] === null;
+                return givenBoard[pos.y][pos.x] === null;
             }).length;
 
             if (emptyCount > 0 && emptyCount < minCount) {
@@ -54,50 +54,51 @@ class StarBattlePuzzleSolver {
                 smallestRegion = label;
             };
         }
-        return regions[smallestRegion];
+        return this.regions[smallestRegion];
     }
 
     //星を置いて×をつける
-    placeStar(board, x, y) {
+    placeStar(givenBoard, x, y) {
         for (let i = -1; i <= 1; i++) {
             for (let j = -1; j <= 1; j++) {
                 if (i === 0 && j === 0) continue;
                 if (y + i < 0 || y + i > this.rows - 1) continue;
                 if (x + j < 0 || x + j > this.cols - 1) continue;
-                board[y + i][x + j] = false
+                givenBoard[y + i][x + j] = false
             }
         }
-        board[y][x] = true;
+        givenBoard[y][x] = true;
         let starsInRow = 0;
         for (let i = 0; i < 10; i++) {
-            if (board[y][i] === true) starsInRow++;
+            if (givenBoard[y][i] === true) starsInRow++;
         }
         if (starsInRow === 2) {
             for (let i = 0; i < 10; i++) {
-                if (board[y][i] === null) board[y][i] = false;
+                if (givenBoard[y][i] === null) givenBoard[y][i] = false;
             }
         }
         let starsInCol = 0;
         for (let i = 0; i < 10; i++) {
-            if (board[i][x] === true) starsInCol++;
+            if (givenBoard[i][x] === true) starsInCol++;
         }
         if (starsInCol === 2) {
             for (let i = 0; i < 10; i++) {
-                if (board[i][x] === null) board[i][x] = false;
+                if (givenBoard[i][x] === null) givenBoard[i][x] = false;
             }
         }
-        return board;
+        return givenBoard;
     }
 
-    tryPlacingStar(board, countOfStars) {
+    tryPlacingStar(givenBoard, countOfStars) {
         if (countOfStars === 20) {
-            this.answerBoard = board;
+            this.answerBoard = givenBoard;
             return true;
         }
-        const smallestRegion = this.getSmallestRegion(board);
-        const candidates = smallestRegion.filter(pos => board[pos.y][pos.x] === null);
+        const smallestRegion = this.getSmallestRegion(givenBoard);
+        if (!smallestRegion) return false;
+        const candidates = smallestRegion.filter(pos => givenBoard[pos.y][pos.x] === null);
         for (const pos of candidates) {
-            const backup = board.map(row => [...row]);
+            const backup = givenBoard.map(row => [...row]);
             const newBoard = this.placeStar(backup, pos.x, pos.y)
             if (this.tryPlacingStar(newBoard, countOfStars + 1)) return true;
         }

@@ -4,6 +4,7 @@ class StarBattlePuzzleImport {
         this.cols = cols;
         this.board = Array.from({length: this.rows}, () => Array(this.cols).fill("1"));
         this.regions = {};
+        console.log("this is Board : ", this.board)
     }
 
     addRegions(ranges) {
@@ -27,6 +28,7 @@ class StarBattlePuzzleImport {
                 }
             }
         }
+        console.log("this is Regions : ", this.regions)
     }
 }
 
@@ -39,15 +41,43 @@ class StarBattlePuzzleSolver {
     }
 
     getsmallestregion () {
-        const numberOfEmpties = [];
-        this.regions.foreach((item, index) => {
-            
-        })
+        let minCount = Infinity;
+        let smallestRegion = null;
+        for (const label in this.regions) {
+            const emptyCount = this.regions[label].filter(pos => {
+                return this.board[pos.y-1][pos.y-1] === "1";
+            }).length;
+
+            if (emptyCount > 0 && emptyCount < minCount) {
+                minCount = emptyCount;
+                smallestRegion = label;
+            };
+        }
+        return smallestRegion;
     }
 
-    randomPlaceInSmallest () {
-        
+    placeStar(board, x, y) {
+        for (let i = -1; i < 1; i++) {
+            for (let j = -1; j < 1; j++) {
+                if (this.board[targetPosition.x + i][targetPosition.y + j] === 1) {
+                    this.board[targetPosition.x + 1][targetPosition.y + j] = 0
+                } else {
+                    return false;
+                }
+            }
+        }
+        this.board[randomTarget.x][ranodmTarget.y] = 2;
     }
+
+    placeRandomInSmallestRegion (currentStars) {
+        const targetRegion = this.getsmallestregion();
+        if (!targetRegion) return null;
+        const positions = this.regions[targetRegion].filter(pos => {
+            return this.board[pos.x-1][pos.y-1] === "1";
+        });
+
+    }
+
 }
 
 const ranges = {

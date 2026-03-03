@@ -15,12 +15,12 @@ function drawOutline() {
 function drawSqears() {
     ctx.beginPath();
     for (let i = 1; i <= gridSize; i++) {
-        ctx.moveTo(5 * i, 0);
-        ctx.lineTo(5 * i, 100);
+        ctx.moveTo(cellSize * i, 0);
+        ctx.lineTo(cellSize * i, 100);
     }
     for (let i = 0; i < gridSize; i++) {
-        ctx.moveTo(0, 5 * i);
-        ctx.lineTo(100, 5 * i); 
+        ctx.moveTo(0, cellSize * i);
+        ctx.lineTo(100, cellSize * i); 
     }
     ctx.closePath();
     ctx.stroke();
@@ -38,6 +38,7 @@ document.getElementById('solveBtn').addEventListener('click', () => {
 
 drawOutline();
 drawSqears();
+
 
 
 

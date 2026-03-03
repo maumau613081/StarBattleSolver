@@ -9,7 +9,7 @@ puzzle.addRegions(ranges);
 const solver = new StarBattlePuzzleSolver(gridSize, gridSize, puzzle.board, puzzle.regions);
 
 function drawOutline(board) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeRect(0, 0, canvas.width, canvas.height);
 }
 
 function drawSqears(board) {
@@ -34,6 +34,6 @@ document.getElementById('solveBtn').addEventListener('click', () => {
 
 
 drawOutline(puzzle.board);
-drawSqears(board);
+
 
 

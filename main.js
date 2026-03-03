@@ -14,7 +14,7 @@ function drawOutline() {
 
 function drawSqears() {
     ctx.beginPath();
-    for (let i = 1; i <= gridSize; i++) {
+    for (let i = 1; i < gridSize; i++) {
         ctx.moveTo(cellSize * i, 0);
         ctx.lineTo(cellSize * i, canvas.height);
     }
@@ -38,6 +38,7 @@ document.getElementById('solveBtn').addEventListener('click', () => {
 
 drawOutline();
 drawSqears();
+
 
 
 

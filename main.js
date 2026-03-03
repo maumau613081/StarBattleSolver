@@ -34,7 +34,7 @@ canvas.addEventListener('click', (event) => {
     regionItems.push({x : col, y : row})
     ctx.beginPath();
     ctx.fillStyle = "#ffbbbb";
-    ctx.fillRect(cellSize * col, cellSIze * row, cellSize, cellSize);
+    ctx.fillRect(cellSize * col, cellSize * row, cellSize, cellSize);
 });
 
 document.getElementById('createRegion').addEventListener('click', () => {

@@ -29,6 +29,12 @@ class StarBattlePuzzleImport {
             }
         }
     }
+
+    resetboard() {
+        for (let r = 0; r < this.rows; r++) {
+            this.board[r].fill(null);
+        }
+    }
 }
 
 class StarBattlePuzzleSolver {

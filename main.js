@@ -40,6 +40,13 @@ document.getElementById('solveBtn').addEventListener('click', () => {
     }
 });
 
+document.getElementById('resetBtn').addEventListener('click', () => {
+    puzzle.resetboard();
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+    drawOutline();
+    drawCells();
+})
+
 
 drawOutline();
 drawCells();

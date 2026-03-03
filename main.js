@@ -13,6 +13,7 @@ function drawOutline() {
 }
 
 function drawSqears() {
+    ctx.beginPath();
     for (let i = 1; i <= gridSize; i++) {
         ctx.moveto(5 * i, 0);
         ctx.lineto(5 * i, 100);
@@ -21,6 +22,7 @@ function drawSqears() {
         ctx.moveto(0, 5 * i);
         ctx.lineto(100, 5 * i); 
     }
+    ctx.closePath();
 }
 
 document.getElementById('solveBtn').addEventListener('click', () => {
@@ -35,6 +37,7 @@ document.getElementById('solveBtn').addEventListener('click', () => {
 
 drawOutline();
 drawSqears();
+
 
 
 

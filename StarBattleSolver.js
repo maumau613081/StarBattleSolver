@@ -1,53 +1,27 @@
-class StarBattlePuzzleImport {
-    constructor(rows, cols) {
-        this.rows = rows;
-        this.cols = cols;
-        this.board = Array.from({length: this.rows}, () => Array(this.cols).fill(null));
-        this.regions = {};
-    }
-
-    //枠を読み込む
-    addRegions(ranges) {
-        for (const key in ranges) {
-            const data = ranges[key];
-            const xStart = data[0] - 1;
-            const label = key.replace("Range", "");
-            this.regions[label] = [];
-
-            for (let i = 1; i < data.length; i++) {
-                const currentX = xStart + i - 1;
-                const yRange = data[i];
-
-                for (let j = 0; j < yRange.length / 2; j++) {
-                    const yStart = yRange[2 * j] - 1;
-                    const yEnd = yRange[2 * j + 1] - 1;
-
-                    for (let k = yStart; k <= yEnd; k++) {
-                        this.regions[label].push({x:currentX,y:k});
-                    }
-                }
-            }
-        }
+class StarBattlePuzzle {
+    constructor(gridSize) {
+        this.gridSize = gridSize
+        const grid = Array.from({length: gridSize}, () => Array.from({length : gridSize}, () => ({status : null, regionID : null})));
     }
 
     resetboard() {
-        for (let r = 0; r < this.rows; r++) {
-            this.board[r].fill(null);
+        for (let i = 0; i < this.gridSize; i++) {
+            for (let j = 0; j < this.gridSize; j++) {
+                grid[i][j] = {status : null, regionID : null};
+            }
         }
     }
 }
 
 class StarBattlePuzzleSolver {
-    constructor (rows, cols, board, regions) {
-        this.rows = rows;
-        this.cols = cols;
-        this.board = board;
-        this.regions = regions;
-        this.answerBoard = [];
+    constructor (gridSize, grid) {
+        this.gridSize = gridSize;
+        this.grid = grid;
+        this.answerGrid = [];
     }
 
     //空きが最小の枠を取得
-    getSmallestRegion (givenBoard) {
+    getSmallestRegion (givenGrid) {
         let minCount = Infinity;
         let smallestRegion = null;
         for (const label in this.regions) {

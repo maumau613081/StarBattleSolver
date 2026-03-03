@@ -34,7 +34,7 @@ canvas.addEventListener('click', (event) => {
     regionItems.push({x : col, y : row})
     ctx.beginPath();
     ctx.fillStyle = "rgba(255, 175, 175, 0.8)";
-    ctx.fillRect(cellSize * col, row, cellSize, cellSize);
+    ctx.fillRect(cellSize * col, cellSIze * row, cellSize, cellSize);
 });
 
 document.getElementById('createRegion').addEventListener('click', () => {

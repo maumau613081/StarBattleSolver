@@ -20,13 +20,15 @@ function drawCells() {
     }
     for (let i = 0; i < gridSize; i++) {
         ctx.moveTo(0, cellSize * i);
-        ctx.lineTo(canvas.width, cellSize * i); 
+        ctx.lineTo(canvas.width, cellSize * i);
     }
     ctx.closePath();
     ctx.stroke();
 }
 
-canvas.addEventListener('click', (event) =>
+canvas.addEventListener('click', (event) => {
+    const 
+});
 
 document.getElementById('solveBtn').addEventListener('click', () => {
     if (solver.tryPlacingStar(puzzle.board, 0)) {

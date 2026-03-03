@@ -3,6 +3,8 @@ const gridSize = 10;
 const canvas = document.getElementById('puzzleCanvas');
 const ctx = canvas.getContext('2d');
 const cellSize = canvas.width / gridSize;
+const regions = [];
+let regionItems = [];
 
 const puzzle = new StarBattlePuzzleImport(gridSize, gridSize);
 puzzle.addRegions(ranges);
@@ -29,7 +31,19 @@ canvas.addEventListener('click', (event) => {
     const cursor = {x : event.clientX - rect.left, y : event.clientY -rect.top};
     const col = Math.floor(cursor.x / cellSize);
     const row = Math.floor(cursor.y / cellSize);
+    regionItems.push({x : col, y : row})
+    ctx.beginPath();
+    ctx.fillStyle = "rgba(255, 175, 175, 0.8)";
+    ctx.fillRect(cellSize * col, row, cellSize, cellSize);
 });
+
+document.getElementById('createRegion').addEventListener('click', () => {
+    regions[regions.length] = regionItems;
+    regionItems = [];
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+    drawOutline();
+    drawCells();
+})
 
 document.getElementById('solveBtn').addEventListener('click', () => {
     if (solver.tryPlacingStar(puzzle.board, 0)) {

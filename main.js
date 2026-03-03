@@ -23,6 +23,7 @@ function drawSqears() {
         ctx.lineto(100, 5 * i); 
     }
     ctx.closePath();
+    ctx.stroke();
 }
 
 document.getElementById('solveBtn').addEventListener('click', () => {
@@ -37,6 +38,7 @@ document.getElementById('solveBtn').addEventListener('click', () => {
 
 drawOutline();
 drawSqears();
+
 
 
 

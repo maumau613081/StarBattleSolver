@@ -33,7 +33,7 @@ canvas.addEventListener('click', (event) => {
     const row = Math.floor(cursor.y / cellSize);
     regionItems.push({x : col, y : row})
     ctx.beginPath();
-    ctx.fillStyle = "rgba(255, 175, 175, 0.8)";
+    ctx.fillStyle = "#ffbbbb";
     ctx.fillRect(cellSize * col, cellSIze * row, cellSize, cellSize);
 });
 

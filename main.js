@@ -8,11 +8,11 @@ const puzzle = new StarBattlePuzzleImport(gridSize, gridSize);
 puzzle.addRegions(ranges);
 const solver = new StarBattlePuzzleSolver(gridSize, gridSize, puzzle.board, puzzle.regions);
 
-function drawOutline(board) {
+function drawOutline() {
     ctx.strokeRect(0, 0, canvas.width, canvas.height);
 }
 
-function drawSqears(board) {
+function drawSqears() {
     for (let i = 1; i <= gridSize; i++) {
         ctx.moveto(5 * i, 0);
         ctx.lineto(5 * i, 100);
@@ -33,7 +33,8 @@ document.getElementById('solveBtn').addEventListener('click', () => {
 });
 
 
-drawOutline(puzzle.board);
+drawOutline();
+drawSqears();
 
 
 

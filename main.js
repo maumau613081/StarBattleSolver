@@ -17,12 +17,11 @@ function drawCells() {
     for (let i = 1; i < gridSize; i++) {
         ctx.moveTo(cellSize * i, 0);
         ctx.lineTo(cellSize * i, canvas.height);
-    }
-    for (let i = 0; i < gridSize; i++) {
         ctx.moveTo(0, cellSize * i);
         ctx.lineTo(canvas.width, cellSize * i);
     }
     ctx.closePath();
+    ctx.strokeStyle = #b1b1b1
     ctx.stroke();
 }
 

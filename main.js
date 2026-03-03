@@ -20,16 +20,15 @@ function drawCells() {
         ctx.moveTo(0, cellSize * i);
         ctx.lineTo(canvas.width, cellSize * i);
     }
-    ctx.closePath();
-    ctx.strokeStyle = #b1b1b1;
+    ctx.strokeStyle = "#b1b1b1";
     ctx.stroke();
 }
 
 canvas.addEventListener('click', (event) => {
     const rect = canvas.getBoundingClientRect();
-    const cursor = {x : event.clientX - rect.left, y : event.clientY -rect,top};
+    const cursor = {x : event.clientX - rect.left, y : event.clientY -rect.top};
     const col = Math.floor(cursor.x / cellSize);
-    const row = Matj.floor(cursor.y / cellSize);
+    const row = Math.floor(cursor.y / cellSize);
 });
 
 document.getElementById('solveBtn').addEventListener('click', () => {

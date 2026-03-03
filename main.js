@@ -44,14 +44,3 @@ document.getElementById('solveBtn').addEventListener('click', () => {
 drawOutline();
 drawCells();
 
-
-
-
-
-
-
-
-
-
-
-
